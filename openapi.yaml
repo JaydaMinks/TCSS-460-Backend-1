@@ -29,6 +29,52 @@ tags:
       Includes both raw pass-through and transformed response endpoints.
 
 paths:
+  #--- Weevil Routes------------------------------------------------
+  /v1/weevils/{name}:
+  get:
+    summary: Get a weevil fact
+    parameters:
+      - in: path
+        name: name
+        required: true
+        schema:
+          type: string
+    responses:
+      200:
+        description: A weevil fact
+        content:
+          application/json:
+            example:
+              name: "acorn"
+              fact: "Acorn weevils drill into nuts!"
+
+/v1/weevils/search:
+  get:
+    summary: Search weevils by type
+    parameters:
+      - in: query
+        name: type
+        required: true
+        schema:
+          type: string
+    responses:
+      200:
+        description: List of weevils
+
+/v1/weevils:
+  post:
+    summary: Add a new weevil
+    requestBody:
+      required: true
+      content:
+        application/json:
+          example:
+            name: "tiny"
+            fact: "Very small weevil"
+            type: "cute"
+    responses:
+      201:
+        description: Weevil added
   # ── Hello Routes ──────────────────────────────────────────────
 
   /v1/hello:
@@ -227,6 +273,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/HeadersResponse'
+              
 
   /v2/input/search:
     get:
