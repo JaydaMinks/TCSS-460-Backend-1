@@ -16,6 +16,8 @@ servers:
 tags:
   - name: Hello (v1)
     description: Basic HTTP method demos — no middleware
+  - name: Weevils (v1)
+    description: Get a weevil fact by name, search weevils by type, and add new weevils.
   - name: Hello (v2)
     description: Same handlers with route-level middleware
   - name: Input (v1)
