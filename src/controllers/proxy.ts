@@ -92,3 +92,30 @@ export const getForecast = async (request: Request, response: Response) => {
     response.status(502).json({ error: 'Failed to reach weather service' });
   }
 };
+
+/**
+ * Raw pass-through proxy for the Air Pollution API.
+ */
+export const getAirPollution = async (request: Request, response: Response) => {
+  const lat = request.query.lat || request.params.lat;
+  const lon = request.query.lon || request.params.lon;
+  const apiKey = process.env.WEATHER_API_KEY;
+
+  try {
+    // Air Pollution API uses /air_pollution and requires lat/lon
+    const result = await fetch(
+      `${BASE_URL}/air_pollution?lat=${lat}&lon=${lon}&appid=${apiKey}`
+    );
+    
+    const data = (await result.json()) as Record<string, unknown>;
+
+    if (!result.ok) {
+      response.status(result.status).json({ error: data.message || 'Air Pollution API error' });
+      return;
+    }
+
+    response.json(data);
+  } catch (_error) {
+    response.status(502).json({ error: 'Failed to reach weather service' });
+  }
+};

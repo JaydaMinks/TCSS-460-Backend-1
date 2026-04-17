@@ -80,3 +80,17 @@ export const validateUserBody = (request: Request, response: Response, next: Nex
   }
   next();
 };
+
+export const requireCoordinates = (req: Request, res: Response, next: NextFunction) => {
+  const lat = req.query.lat || req.params.lat;
+  const lon = req.query.lon || req.params.lon;
+
+  if (!lat || !lon) {
+    res.status(400).json({ 
+        error: 'Missing required parameters. Please provide both lat and lon.' 
+    });
+    return;
+  }
+  
+  next();
+};
